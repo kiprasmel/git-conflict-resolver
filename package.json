@@ -1,0 +1,24 @@
+{
+	"name": "git-conflict-resolver",
+	"version": "0.0.0",
+	"description": "auto-resolve merge conflicts.",
+	"main": "apply-patch.js",
+	"scripts": {
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kiprasmel/git-conflict-resolver.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/kiprasmel/git-conflict-resolver/issues"
+	},
+	"homepage": "https://github.com/kiprasmel/git-conflict-resolver#readme",
+	"devDependencies": {
+		"jest": "^30.2.0"
+	}
+}
