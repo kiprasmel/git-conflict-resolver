@@ -7,21 +7,20 @@ const crypto = require("crypto")
 const { execSync } = require("child_process")
 
 const { applyPatch } = require("./apply-patch.js")
+const { handleHunkCommand } = require("./hunk.js")
 
 const EXPECTED_ARG_COUNT = 3
 const TEMP_FILE_PREFIX = "git-conflict-resolver"
 const DIFF_EXIT_CODE_FILES_DIFFER = 1
 
 const HELP_TEXT = `\
-usage:
-resolve-conflict <OLD> <NEW_OLD> <NEW>
+Usage:
+  resolve-conflict <OLD> <NEW_OLD> <NEW>
+    Generate diff between old_file and new_old_file
+    Apply that diff to new_file (ignoring context mismatches)
 
-This will:
-  1. Generate diff between old_file and new_old_file
-  2. Apply that diff to new_file (ignoring context mismatches)
-
-Example:
-  resolve-conflict.js old new_old new
+Commands:
+    hunk <FILE> [-a|--apply] [--undo] [-h|--help]
 `
 
 function resolveConflict(argv = process.argv.slice(2)) {
@@ -107,5 +106,17 @@ module.exports = {
 }
 
 if (!module.parent) {
-	resolveConflict()
+	main()
+}
+
+function main() {
+	const argv = process.argv.slice(2)
+	
+	// Check if first argument is "hunk" sub-command
+	if (argv.length > 0 && argv[0] === "hunk") {
+		handleHunkCommand(argv.slice(1))
+	} else {
+		// Legacy 3-argument usage
+		resolveConflict(argv)
+	}
 }
